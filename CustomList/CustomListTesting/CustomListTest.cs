@@ -8,40 +8,50 @@ namespace CustomListTesting
     public class CustomListTest
     {
         [TestMethod]
-        public void get_returnEnteredValue_returnValue()
+        public void getSet_returnEnteredValue_returnValue()
         {
             //Arrange
-            Indexer<TestCategoryAttribute> indexer = new Indexer<TestCategoryAttribute>();
+            CustomList<TestCategoryAttribute> testList = new CustomList<TestCategoryAttribute>();
             int i = 0;
             //Act
-            TestCategoryAttribute testValue = indexer[i];
+            TestCategoryAttribute testValue = testList[i];
             //Assert
-            Assert.AreEqual(testValue, indexer[i]);
+            Assert.AreEqual(testValue, testList[i]);
         }
 
         [TestMethod]
-        public void get_returnEnteredValue_returnValueEX()
+        public void add_addInt_returnValueEX()
         {
             //Arrange
             CustomList<int> testList = new CustomList<int>();
             int testValue = 1;
             //Act
-            testList.Add(1);
+            testList.AddElement(testValue);
             //Assert
             Assert.AreEqual(testValue, testList[0]);
         }
 
         [TestMethod]
-        // additional attribute for "expect exception thrown"
-        public void get_returnEnteredValue_returnValueEX2()
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void add_addStringIndex_IndexExceptionExpected()
         {
             //Arrange
-            CustomList<int> testList = new CustomList<int>();
-            int testValue = 1;
+            CustomList<string> testList = new CustomList<string>();
+            string testValue = "test";
             //Act
-            testList.Add(1);
+            testList.AddElement(testValue);
             //Assert
             Assert.AreEqual(testValue, testList[10]);
+        }
+        public void add_addBool_returnValueEX3()
+        {
+            //Arrange
+            CustomList<bool> testList = new CustomList<bool>();
+            bool testValue = false;
+            //Act
+            testList.AddElement(testValue);
+            //Assert
+            Assert.AreEqual(testValue, testList[0]);
         }
     }
 }

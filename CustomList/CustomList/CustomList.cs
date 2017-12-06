@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class CustomList<T> where T : IComparer<T>, IEqualityComparer<T>
+    public class CustomList<T>
     {
-        private int count;
+        //private int count;
         private T[] array = new T[] { };
         public T this[int i] => array[i];
         public void AddElement(object element)
         {
 
         }
-        public void ClearElements()
+        public void RemoveElement(object element)
         {
 
         }
@@ -32,18 +32,6 @@ namespace CustomList
 
         }
         public void RemoveElementAtIndex(Int32 index)
-        {
-
-        }
-        public void CompareElementTo(object otherElement, IComparer<T> comparableElement)
-        {
-
-        }
-        public void ElementEquals(object otherElement, IEqualityComparer<T> comparableElement)
-        {
-
-        }
-        public void GetElementHashCode(IEqualityComparer<T> comparableElement)
         {
 
         }
