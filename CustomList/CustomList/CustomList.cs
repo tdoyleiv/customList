@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class CustomList<T> : IEnumerable
+    public class CustomList<T> : IEnumerable<T>
     {
         private int count;
         private int capacity;
@@ -41,57 +41,115 @@ namespace CustomList
         }
         public void Add(T element)
         {
-            if (Count < capacity)
+            if ((count * 2) >= capacity)
             {
-                array[Count] = element;
-                IncrementCount(Count);
+                CreateIncreasedArray();
             }
-            else if (Count >= capacity)
-            {
-                DoubleCapacity(capacity);
-                array[Count] = element;
-                IncrementCount(Count);
-            }
+            array[count] = element;
+            IncrementCount();
         }
         public bool Remove(T element)
         {
-            return;
-        }
-        public void Contains(T element)
-        {
-
-        }
-        public void IndexOf(T element)
-        {
-
-        }
-        public void Insert(int index, T element)
-        {
-
+            bool result = false;
+            for (int i = 0; i < count; i++)
+            {
+                if (array[i].Equals(element))
+                {
+                    RemoveAt(i);
+                    result = true;
+                }
+            }
+            return result;
         }
         public void RemoveAt(int index)
         {
-
+            if ((index < count) && (index >= 0))
+            {
+                for (int i = index; i < count; i++)
+                {
+                    {
+                        array[i] = array[i + 1];
+                    }
+                }
+                DecrementCount();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("{0} caused by nonexistent index parameter, RemoveAt(int index)", "ArgumentOutOfRangeException");
+            }
+        }
+        public bool Contains(T element)
+        {
+            bool result = false;
+            for (int i = 0; i < count; i++)
+            {
+                if (array[i].Equals(element))
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+        public int IndexOf(T element)
+        {
+            int index = 0;
+            for (int i = 0; i < count; i++)
+            {
+                if (array[i].Equals(element))
+                {
+                    index = i;
+                }
+            }
+            return index;
+        }
+        public void Insert(int index, T element)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (array[i].Equals(index))
+                {
+                    array[i] = element;
+                }
+            }
         }
         public IEnumerator<T> GetEnumerator()
         {
-            yield return;
+
         }
         public override string ToString()
         {
-            return "";
+             
         }
-        public int IncrementCount(int count)
+        public void IncrementCount()
         {
-            return Count++;
+            count++;
         }
-        public int DoubleCapacity(int capacity)
+        public void DoubleCapacity()
         {
-           return capacity * 2;
+           capacity *= 2;
         }
-        public int DecrementCount(int count)
+        public void DecrementCount()
         {
-            return Count--;
+            count--;
+        }
+        public void CreateIncreasedArray()
+        {
+            DoubleCapacity();
+            T[] newArray = new T[capacity];
+            for (int i = 0; i < count; i++)
+            {
+                newArray[i] = array[i];
+            }
+            array = newArray;
+        }
+        public void CreateNewArray()
+        {
+            T[] newArray = new T[capacity];
+            for (int i = 0; i < count; i++)
+            {
+                newArray[i] = array[i];
+            }
+            array = newArray;
         }
     }
 }

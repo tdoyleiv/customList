@@ -10,6 +10,13 @@ namespace CustomList
     {
         static void Main(string[] args)
         {
+            CustomList<string> list = new CustomList<string>();
+            list.Add("Hello");
+            list.Add("Hello");
+            list.Add("Hello");
+            list.Add("Hello");
+            list.Add("Hello");
+            list.Add("Hello");
         }
     }
 }

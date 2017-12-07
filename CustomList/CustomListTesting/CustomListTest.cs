@@ -55,6 +55,7 @@ namespace CustomListTesting
         {
             //Arrange
             CustomList<string> testList = new CustomList<string>();
+            testList.Add("test");
             //Act
             string result = testList[10];
             //Assert
@@ -68,6 +69,17 @@ namespace CustomListTesting
             testList.Add(false);
             //Assert
             Assert.AreEqual(1, testList.Count);
+        }
+        [TestMethod]
+        public void Add_AddTwoStrings_IncrementCount()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            //Act
+            testList.Add("testOne");
+            testList.Add("testTwo");
+            //Assert
+            Assert.AreEqual(2, testList.Count);
         }
         [TestMethod]
         public void Add_AddDoubleOverCapacity_ExpectedCount()
@@ -88,7 +100,7 @@ namespace CustomListTesting
         public void Add_AddUIntOverCapacity_ExpectedList()
         {
             //Arrange
-            CustomList<uint> testList = new CustomList<uint>();
+            CustomList<int> testList = new CustomList<int>();
             //Act
             testList.Add(1);
             testList.Add(2);
@@ -97,7 +109,7 @@ namespace CustomListTesting
             testList.Add(5);
             testList.Add(6);
             //Assert
-            Assert.AreEqual("1 2 3 4 5 6", joinedList);
+            Assert.AreEqual(6, testList[5]);
         }
         [TestMethod]
         public void ToString_AddInt_ConvertToString()
@@ -106,9 +118,9 @@ namespace CustomListTesting
             CustomList<int> testList = new CustomList<int>();
             testList.Add(1);
             //Act
-            testList.ToString();
+            string testString = testList.ToString();
             //Assert
-            Assert.AreEqual("1", testList[0]);
+            Assert.AreEqual("1", testString);
         }
         [TestMethod]
         public void Remove_NoElementFound_ReturnFalse()
@@ -120,6 +132,43 @@ namespace CustomListTesting
             testList.Add("testTwo");
             //Assert
             Assert.IsFalse(testList.Remove("testThree"));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void RemoveAt_IndexLessThanZero_ArgumentExceptionExpected()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("test");
+            //Act
+            testList.RemoveAt(-1);
+            //Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void RemoveAt_IndexMoreThanCount_ArgumentExceptionExpected()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("test");
+            //Act
+            testList.RemoveAt(10);
+            //Assert
+        }
+        [TestMethod]
+        public void RemoveAt_ListIndexThree_RemoveElementShiftListDownIndex()
+        {
+            //Arrange
+            CustomList<int> testList = new CustomList<int>();
+            testList.Add(1);
+            testList.Add(2);
+            testList.Add(3);
+            testList.Add(4);
+            testList.Add(5);
+            //Act
+            testList.RemoveAt(3);
+            //Assert
+            Assert.AreEqual(5, testList[3]);
         }
         [TestMethod]
         public void Remove_ListIndexZero_ReturnTrue()
@@ -145,6 +194,7 @@ namespace CustomListTesting
             //Assert
             Assert.AreEqual(2, testList[0]);
         }
+        [TestMethod]
         public void Remove_ListIndexZero_DecrementCount()
         {
             //Arrange
@@ -155,6 +205,67 @@ namespace CustomListTesting
             testList.Remove(1);
             //Assert
             Assert.AreEqual(1, testList.Count);
+        }
+        [TestMethod]
+        public void Contains_ListIndexThree_ReturnTrue()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("1");
+            testList.Add("2");
+            testList.Add("3");
+            testList.Add("4");
+            testList.Add("5");
+            //Act
+            bool result = testList.Contains("4");
+            //Assert
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void Contains_UnindexedValue_ReturnFalse()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("1");
+            testList.Add("2");
+            testList.Add("3");
+            testList.Add("4");
+            //Act
+            bool result = testList.Contains("5");
+            //Assert
+            Assert.IsFalse(result);
+        }
+        [TestMethod]
+        public void IndexOf_ListIndexThree_ReturnIndexThree()
+        {
+            //Arrange
+            CustomList<long> testList = new CustomList<long>();
+            testList.Add(0x100000000);
+            testList.Add(0x200000000);
+            testList.Add(0x300000000);
+            testList.Add(0x400000000);
+            testList.Add(0x500000000);
+            //Act
+            int index = testList.IndexOf(0x400000000);
+            //Assert
+            Assert.AreEqual(3, index);
+        }
+        public void GetEnumerator_AddElement_ReturnIteratedValue()
+        {
+            //Arrange
+            CustomList<long> testList = new CustomList<long>();
+            testList.Add(0x100000000);
+            testList.Add(0x200000000);
+            testList.Add(0x300000000);
+            testList.Add(0x400000000);
+            testList.Add(0x500000000);
+            //Act
+            foreach(var element in testList)
+            {
+                testList.Add(0x600000000);
+            }
+            //Assert
+            Assert.AreEqual(0x600000000, testList[1]);
         }
     }
 }
