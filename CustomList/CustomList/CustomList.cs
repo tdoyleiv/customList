@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class CustomList<T>
+    public class CustomList<T> : IEnumerable
     {
         private int count;
         private int capacity;
@@ -53,9 +53,9 @@ namespace CustomList
                 IncrementCount(Count);
             }
         }
-        public void Remove(T element)
+        public bool Remove(T element)
         {
-
+            return;
         }
         public void Contains(T element)
         {
@@ -73,6 +73,14 @@ namespace CustomList
         {
 
         }
+        public IEnumerator<T> GetEnumerator()
+        {
+            yield return;
+        }
+        public override string ToString()
+        {
+            return "";
+        }
         public int IncrementCount(int count)
         {
             return Count++;
@@ -80,6 +88,10 @@ namespace CustomList
         public int DoubleCapacity(int capacity)
         {
            return capacity * 2;
+        }
+        public int DecrementCount(int count)
+        {
+            return Count--;
         }
     }
 }

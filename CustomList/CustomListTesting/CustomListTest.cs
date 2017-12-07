@@ -34,22 +34,20 @@ namespace CustomListTesting
         {
             //Arrange
             CustomList<int> testList = new CustomList<int>();
-            int testValue = 1;
             //Act
-            testList.Add(testValue);
+            testList.Add(1);
             //Assert
-            Assert.AreEqual(testValue, testList[0]);
+            Assert.AreEqual(1, testList[0]);
         }
         [TestMethod]
         public void Add_AddString_ReturnValueEX2()
         {
             //Arrange
             CustomList<string> testList = new CustomList<string>();
-            string testValue = "test";
             //Act
-            testList.Add(testValue);
+            testList.Add("test");
             //Assert
-            Assert.AreEqual(testValue, testList[0]);
+            Assert.AreEqual("test", testList[0]);
         }
         [TestMethod]
         [ExpectedException(typeof(IndexOutOfRangeException))]
@@ -66,9 +64,8 @@ namespace CustomListTesting
         {
             //Arrange
             CustomList<bool> testList = new CustomList<bool>();
-            bool testValue = false;
             //Act
-            testList.Add(testValue);
+            testList.Add(false);
             //Assert
             Assert.AreEqual(1, testList.Count);
         }
@@ -77,43 +74,87 @@ namespace CustomListTesting
         {
             //Arrange
             CustomList<double> testList = new CustomList<double>();
-            double testValueOne = 1;
-            double testValueTwo = 2;
-            double testValueThree = 3;
-            double testValueFour = 4;
-            double testValueFive = 5;
-            double testValueSix = 6;
             //Act
-            testList.Add(testValueOne);
-            testList.Add(testValueTwo);
-            testList.Add(testValueThree);
-            testList.Add(testValueFour);
-            testList.Add(testValueFive);
-            testList.Add(testValueSix);
+            testList.Add(1);
+            testList.Add(2);
+            testList.Add(3);
+            testList.Add(4);
+            testList.Add(5);
+            testList.Add(6);
             //Assert
             Assert.AreEqual(6, testList.Count);
         }
         [TestMethod]
         public void Add_AddUIntOverCapacity_ExpectedList()
         {
-            CustomList<uint> testList = new CustomList<uint>();
             //Arrange
-            uint testValueOne = 1;
-            uint testValueTwo = 2;
-            uint testValueThree = 3;
-            uint testValueFour = 4;
-            uint testValueFive = 5;
-            uint testValueSix = 6;
+            CustomList<uint> testList = new CustomList<uint>();
             //Act
-            testList.Add(testValueOne);
-            testList.Add(testValueTwo);
-            testList.Add(testValueThree);
-            testList.Add(testValueFour);
-            testList.Add(testValueFive);
-            testList.Add(testValueSix);
+            testList.Add(1);
+            testList.Add(2);
+            testList.Add(3);
+            testList.Add(4);
+            testList.Add(5);
+            testList.Add(6);
             //Assert
-            //Foreach...get list
+            Assert.AreEqual("1 2 3 4 5 6", joinedList);
         }
-
+        [TestMethod]
+        public void ToString_AddInt_ConvertToString()
+        {
+            //Arrange
+            CustomList<int> testList = new CustomList<int>();
+            testList.Add(1);
+            //Act
+            testList.ToString();
+            //Assert
+            Assert.AreEqual("1", testList[0]);
+        }
+        [TestMethod]
+        public void Remove_NoElementFound_ReturnFalse()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            //Act
+            testList.Add("test");
+            testList.Add("testTwo");
+            //Assert
+            Assert.IsFalse(testList.Remove("testThree"));
+        }
+        [TestMethod]
+        public void Remove_ListIndexZero_ReturnTrue()
+        {
+            //Arrange
+            CustomList<int> testList = new CustomList<int>();
+            testList.Add(1);
+            testList.Add(2);
+            //Act
+            bool result = testList.Remove(1);
+            //Assert
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void Remove_ListIndexZero_ReturnNewIndexValue()
+        {
+            //Arrange
+            CustomList<long> testList = new CustomList<long>();
+            testList.Add(1);
+            testList.Add(2);
+            //Act
+            testList.Remove(1);
+            //Assert
+            Assert.AreEqual(2, testList[0]);
+        }
+        public void Remove_ListIndexZero_DecrementCount()
+        {
+            //Arrange
+            CustomList<float> testList = new CustomList<float>();
+            testList.Add(1);
+            testList.Add(2);
+            //Act
+            testList.Remove(1);
+            //Assert
+            Assert.AreEqual(1, testList.Count);
+        }
     }
 }
