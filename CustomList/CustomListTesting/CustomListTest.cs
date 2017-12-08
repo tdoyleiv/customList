@@ -112,15 +112,28 @@ namespace CustomListTesting
             Assert.AreEqual(6, testList[5]);
         }
         [TestMethod]
-        public void ToString_AddInt_ConvertToString()
+        public void ToString_AddThreeInts_ConvertToString()
         {
             //Arrange
             CustomList<int> testList = new CustomList<int>();
             testList.Add(1);
+            testList.Add(2);
+            testList.Add(3);
             //Act
-            string testString = testList.ToString();
+            string test = testList.ToString();
             //Assert
-            Assert.AreEqual("1", testString);
+            Assert.AreEqual("123", test);
+        }
+        [TestMethod]
+        public void ToString_AddNullValue_ExpectNotNull()
+        {
+            //Arrange
+            CustomList<long> testList = new CustomList<long>();
+            testList.Add(0L);
+            //Act
+            string test = testList.ToString();
+            //Assert
+            Assert.AreNotEqual(0L, test);
         }
         [TestMethod]
         public void Remove_NoElementFound_ReturnFalse()
@@ -250,22 +263,85 @@ namespace CustomListTesting
             //Assert
             Assert.AreEqual(3, index);
         }
+        [TestMethod]
+        public void Insert_InsertStringIndexOne_ReturnValue()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("test");
+            testList.Add("testTwo");
+            //Act
+            testList.Insert(1, "testThree");
+            //Assert
+            Assert.AreEqual("testThree", testList[1]);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Insert_IndexLessThanZero_ArgumentExceptionExpected()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("test");
+            //Act
+            testList.Insert(-1, "testTwo");
+            //Assert
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Insert_IndexMoreThanCount_ArgumentExceptionExpected()
+        {
+            //Arrange
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("test");
+            //Act
+            testList.Insert(10, "testTwo");
+            //Assert
+        }
+        [TestMethod]
         public void GetEnumerator_AddElement_ReturnIteratedValue()
         {
             //Arrange
-            CustomList<long> testList = new CustomList<long>();
-            testList.Add(0x100000000);
-            testList.Add(0x200000000);
-            testList.Add(0x300000000);
-            testList.Add(0x400000000);
-            testList.Add(0x500000000);
+            CustomList<string> testList = new CustomList<string>();
+            testList.Add("Booster");
+            testList.Add("Retro");
+            testList.Add("FIDO");
+            testList.Add("GNC");
+            testList.Add("Control");
+            testList.Add("CAPCOM");
+            string status = "Go";
+            int index = 0;
             //Act
-            foreach(var element in testList)
+            foreach (var element in testList)
             {
-                testList.Add(0x600000000);
+                testList.Insert(index, status);
+                index++;
             }
             //Assert
-            Assert.AreEqual(0x600000000, testList[1]);
+            Assert.AreEqual("Go", testList[1]);
+        }
+        [TestMethod]
+        public void OverloadOperatorAdd_TwoLists_ReturnNewList()
+        {
+            //Arrange
+            CustomList<string> launchStatus = new CustomList<string>() { "Booster", "Retro", "FIDO" };
+            CustomList<string> launchCheck = new CustomList<string>() { "GNC", "Control", "CAPCOM" };
+            //Act
+            CustomList<string> launchStatusCheck = launchStatus + launchCheck;
+            string result = launchStatusCheck.ToString();
+            //Assert
+            Assert.AreEqual("BoosterRetroFIDOGNCControlCAPCOM", result);
+        }
+        [TestMethod]
+        public void OverloadOperatorSubtract_TwoLists_ReturnNewList()
+        {
+            //Arrange
+            CustomList<string> launchStatusCheck = new CustomList<string>() { "Booster", "Retro", "FIDO", "GNC", "Control", "CAPCOM" };
+            CustomList<string> launchCheck = new CustomList<string>() { "GNC", "Control", "CAPCOM" };
+            //Act
+            CustomList<string> launchStatus = launchStatusCheck - launchCheck;
+            string result = launchStatus.ToString();
+            //Assert
+            Assert.AreEqual("BoosterRetroFIDO", result);
         }
     }
 }

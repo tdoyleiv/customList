@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -104,21 +105,26 @@ namespace CustomList
         }
         public void Insert(int index, T element)
         {
-            for (int i = 0; i < count; i++)
+            if ((index < count) && (index >= 0))
             {
-                if (array[i].Equals(index))
-                {
-                    array[i] = element;
-                }
+                array[index] = element;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("{0} caused by nonexistent index parameter, Insert(int index)", "ArgumentOutOfRangeException");
             }
         }
-        public IEnumerator<T> GetEnumerator()
+        public override string ToString() 
         {
-
-        }
-        public override string ToString()
-        {
-             
+            string returnValue = string.Empty;
+            for (int i = 0; i < count; i++)
+            {
+                if (string.IsNullOrEmpty(returnValue))
+                    returnValue += array[i].ToString();
+                else
+                    returnValue += string.Format("{0}", array[i]);
+            }
+            return returnValue;
         }
         public void IncrementCount()
         {
@@ -142,14 +148,27 @@ namespace CustomList
             }
             array = newArray;
         }
-        public void CreateNewArray()
+        private IEnumerable<T> Event()
         {
-            T[] newArray = new T[capacity];
-            for (int i = 0; i < count; i++)
+            for (int index = 0; index < count; index++)
             {
-                newArray[i] = array[i];
+                yield return array[index];
             }
-            array = newArray;
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return Event().GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public static CustomList<T> operator +(CustomList<T> c1, CustomList<T> c2)
+        {
+            CustomList<T> c3 = c1;
+
+            
+            return new CustomList<T>(c1 + c2);     
         }
     }
 }
