@@ -350,7 +350,8 @@ namespace CustomListTesting
         //    CustomList<string> launchStatusCheck = new CustomList<string>() { "Booster", "Retro", "FIDO", "GNC", "Control", "CAPCOM" };
         //    CustomList<string> go = new CustomList<string>() { "GO", "GO", "GO", "GO", "GO", "GO" };
         //    //Act
-
+        //    var launchGo = launchStatusCheck.Zip(go, (first, second) => first + second);
+        //    string result = launchGo.ToString();
         //    //Assert
         //    Assert.AreEqual("BoosterGoRetroGoFIDOGoGNCGoControlGoCAPCOMGO", result);
         //}
