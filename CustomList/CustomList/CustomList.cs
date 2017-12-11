@@ -166,9 +166,24 @@ namespace CustomList
         public static CustomList<T> operator +(CustomList<T> c1, CustomList<T> c2)
         {
             CustomList<T> c3 = c1;
-
+            for (int i = 0; i < c2.Count; i++)
+            {
+                c3.Add(c2[i]);
+            }
             
-            return new CustomList<T>(c1 + c2);     
+            return c3;     
+        }
+        public static CustomList<T> operator -(CustomList<T> c1, CustomList<T> c2)
+        {
+            CustomList<T> c3 = c1;
+            for (int i = 0; i < c2.Count; i++)
+            {
+                if (c3.Contains(c2[i]))
+                {
+                    c3.Remove(c2[i]);
+                }
+            }
+            return c3;
         }
     }
 }

@@ -343,5 +343,16 @@ namespace CustomListTesting
             //Assert
             Assert.AreEqual("BoosterRetroFIDO", result);
         }
+        //[TestMethod]
+        //public void Zip_TwoLists_ReturnNewList()
+        //{
+        //    //Arrange
+        //    CustomList<string> launchStatusCheck = new CustomList<string>() { "Booster", "Retro", "FIDO", "GNC", "Control", "CAPCOM" };
+        //    CustomList<string> go = new CustomList<string>() { "GO", "GO", "GO", "GO", "GO", "GO" };
+        //    //Act
+
+        //    //Assert
+        //    Assert.AreEqual("BoosterGoRetroGoFIDOGoGNCGoControlGoCAPCOMGO", result);
+        //}
     }
 }
